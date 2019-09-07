@@ -1,1 +1,0 @@
-docker-resty-auto-ssl

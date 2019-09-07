@@ -1,0 +1,38 @@
+FROM ubuntu
+
+RUN buildDeps='gcc libc6-dev make wget' \
+    # && apt-get update \
+    && apt-get install libpcre3-dev libssl-dev perl make build-essential curl \
+    && apt-get install zlib1g-dev \
+    && wget "https://openresty.org/download/openresty-1.15.8.1.tar.gz" \
+    && tar xzvf openresty-1.15.8.1.tar.gz \
+    && cd openresty-1.15.8.1/ \
+    && ./configure -j2 \
+    && make -j2 \
+    && make install \
+    && rm openresty-1.15.8.1.tar.gz \
+    && rm -r openresty-1.15.8.1 \
+    && wget "https://www.openssl.org/source/openssl-1.1.1c.tar.gz" \
+    && tar xzvf openssl-1.1.1c.tar.gz \
+    && cd openssl-1.1.1c \
+    && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' \
+    && make \
+    && make install \
+    && openssl version -a \
+    && wget "https://luarocks.org/releases/luarocks-3.1.3.tar.gz" \
+    && tar zxpf luarocks-3.1.3.tar.gz \
+    && cd luarocks-3.1.3 \
+    && ./configure --prefix=/usr/local/openresty/luajit \
+    --with-lua=/usr/local/openresty/luajit/ \
+    --lua-suffix=jit \
+    --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1 \
+    && make \
+    && make install \
+    && luarocks install lua-resty-auto-ssl \
+    && mkdir /etc/resty-auto-ssl \
+    && chown www-data /etc/resty-auto-ssl \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && 	sudo openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 \
+	   -subj '/CN=sni-support-required-for-valid-ssl' \
+	   -keyout /etc/ssl/resty-auto-ssl-fallback.key \
+	   -out /etc/ssl/resty-auto-ssl-fallback.crt

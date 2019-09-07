@@ -1,0 +1,43 @@
+FROM ubuntu
+
+RUN echo "\e[1;31m apt-get update \e[0m" \
+    && apt-get update \
+    && echo "\e[1;31m install gnupg2 \e[0m" \
+    && apt-get install -y gnupg2 \
+    && echo "\e[1;31m install -y wget \e[0m" \
+    && apt-get install -y wget \
+    && rm -rf /var/lib/apt/lists/* \
+    && wget -qO - https://openresty.org/package/pubkey.gpg | apt-key add - \
+    && apt-get update \
+    && echo "\e[1;31m install software-properties-common \e[0m" \
+    && apt-get -y install software-properties-common \
+    && add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" \
+    && echo "\e[1;31m install openresty \e[0m" \
+    && apt-get install -y --no-install-recommends openresty \
+    && wget "https://www.openssl.org/source/openssl-1.1.1c.tar.gz" \
+    && tar xzvf openssl-1.1.1c.tar.gz \
+    && cd openssl-1.1.1c \
+    && ./config -Wl,--enable-new-dtags,-rpath,'$(LIBRPATH)' \
+    && make \
+    && echo "\e[1;31m install openssl \e[0m" \
+    && make install \
+    && openssl version -a \
+    && wget "https://luarocks.org/releases/luarocks-3.1.3.tar.gz" \
+    && tar zxpf luarocks-3.1.3.tar.gz \
+    && cd luarocks-3.1.3 \
+    && ./configure --prefix=/usr/local/openresty/luajit \
+    --with-lua=/usr/local/openresty/luajit/ \
+    --lua-suffix=jit \
+    --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1 \
+    && make \
+    && echo "\e[1;31m install luarocks \e[0m" \
+    && make install \
+    && echo "\e[1;31m install lua-resty-auto-ssl \e[0m" \
+    && luarocks install lua-resty-auto-ssl \
+    && mkdir /etc/resty-auto-ssl \
+    && chown www-data /etc/resty-auto-ssl \
+    && apt-get purge -y --auto-remove $buildDeps \
+    && 	openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 \
+	   -subj '/CN=sni-support-required-for-valid-ssl' \
+	   -keyout /etc/ssl/resty-auto-ssl-fallback.key \
+	   -out /etc/ssl/resty-auto-ssl-fallback.crt
