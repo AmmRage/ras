@@ -2,6 +2,8 @@
 
 openresty with auto ssl in docker
 
+![GitHub Actions](https://github.com/AmmRage/ras/workflows/CI/badge.svg)
+
 ## Usage
 
 ### Run
