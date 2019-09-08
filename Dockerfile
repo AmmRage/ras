@@ -1,5 +1,7 @@
 FROM openresty/openresty:1.15.8.2-1-bionic
 
+LABEL "author"="ammrage<ammrage@gmail.com>"
+
 RUN echo "\e[1;31m install wget \e[0m" \
     && apt-get install -y wget \
     && rm -rf /var/lib/apt/lists/* \
@@ -22,10 +24,4 @@ RUN echo "\e[1;31m install wget \e[0m" \
     && mkdir /etc/resty-auto-ssl \
     && echo "\e[1;31m set access \e[0m" \
     && chown www-data /etc/resty-auto-ssl \
-    && echo "\e[1;31m create dummy key-chain \e[0m" \
-    && openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 \
-	   -subj '/CN=sni-support-required-for-valid-ssl' \
-	   -keyout /etc/ssl/resty-auto-ssl-fallback.key \
-	   -out /etc/ssl/resty-auto-ssl-fallback.crt \
     && echo "\e[1;31m first run done \e[0m"
-ADD openresty.service /etc/systemd/system

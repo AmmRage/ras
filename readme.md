@@ -7,15 +7,18 @@ openresty with auto ssl in docker
 ### Run
 
 volume
-**/usr/local/openresty/nginx/conf** and **/etc/ssl** 
+
+mount **/usr/local/openresty/nginx/conf** and **/etc/ssl/[subfolder]** 
+
+> **DO NOT** mount the /etc/ssl because it will affect the openssl environment.
 
 ### Add New Domain
 
-1. run the commmand to create dummy key-chain
+2. **IN SERVER** add new server item in configuration file
 
-2. add new server item in configuration file
+1. **IN CONTAINER** run the commmand to create dummy key-chain
 
-3. restart service 
+3. **IN CONTAINER** reload config 
 
 > investigate auto reload of configuration file and other automatic things like intergate CSP api to auto add domain & add configuration items & create dummy cert 
 
