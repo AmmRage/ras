@@ -39,7 +39,7 @@ sudo docker run -it -d \
     ammrage/ras:latest /bin/bash
 ```
 
-get bash inactive with the container instance.
+get bash interactive with the container instance.
 
 ```
 sudo docker exec -it ras /bin/bash
@@ -66,7 +66,7 @@ check the running status of nginx by using **TOP** command. if everything went w
 
 2. **IN SERVER** add new server item in configuration file
 
-1. **IN CONTAINER** run the command to create dummy key-chain
+1. **IN CONTAINER** run the command to create dummy cert
 
 3. **IN CONTAINER** reload config. make sure be aware of the nginx reload command. 
 
@@ -78,16 +78,11 @@ mount **/usr/local/openresty/nginx/conf**, **/usr/local/openresty/nginx/logs** a
 
 > **DO NOT** mount the /etc/ssl because it will affect the openssl environment.
 
-
 ## Build
 
 just build it
 
 ## To Do
 
-1. fill up usage details
-
-2. add CI
-
-3. add test
+1. add test
 
