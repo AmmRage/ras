@@ -4,6 +4,12 @@ openresty with auto ssl in docker
 
 ![GitHub Actions](https://github.com/AmmRage/ras/workflows/CI/badge.svg)
 
+## Docker
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/ammrage/ras.svg)](https://hub.docker.com/r/ammrage/ras)
+[![Docker Stars](https://img.shields.io/docker/stars/ammrage/ras.svg)](https://hub.docker.com/r/ammrage/ras)
+[![Docker Automated](https://img.shields.io/docker/cloud/automated/ammrage/ras.svg)](https://hub.docker.com/r/ammrage/ras)
+
 ## Usage
 
 ### Prepare
