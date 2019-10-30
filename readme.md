@@ -88,7 +88,4 @@ mount **/usr/local/openresty/nginx/conf**, **/usr/local/openresty/nginx/logs** a
 
 just build it
 
-## To Do
-
-1. add test
 
