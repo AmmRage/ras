@@ -1,0 +1,14 @@
+version: "3"
+services:
+  halo:
+    container_name: ras
+    image: ammrage/ras:nightly
+    stdin_open: true 
+    tty: true        
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /home/ubuntu/resty:/usr/local/openresty/nginx/conf
+      - /home/ubuntu/resty/logs:/usr/local/openresty/nginx/logs
+      - /home/ubuntu/resty/ssl:/etc/ssl/mine
