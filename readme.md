@@ -80,9 +80,13 @@ check the running status of nginx by using **TOP** command. if everything went w
 
 ### Notice
 
-mount **/usr/local/openresty/nginx/conf**, **/usr/local/openresty/nginx/logs** and **/etc/ssl/mine** 
+1. mount **/usr/local/openresty/nginx/conf**, **/usr/local/openresty/nginx/logs** and **/etc/ssl/mine** 
 
 > **DO NOT** mount the /etc/ssl because it will affect the openssl environment.
+
+2. for different cloud service providers, initial state of firewall may be quite different
+
+> remember to check all firewall (iptable, ufw etc) settings before issue ssl cert.
 
 ## Build
 
